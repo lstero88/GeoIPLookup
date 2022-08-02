@@ -1,0 +1,1140 @@
+<html>
+
+
+<head>
+
+    <title>GeoIP Lookup</title>
+	
+
+    <style>  
+
+    body{
+
+        background-color: #002F6C;
+
+
+    }
+	
+	
+	#map_container {
+		width: 210px;
+		height:150px;
+	}
+		
+    
+    header, footer {
+      background: #999
+    }
+
+    #container {
+      display: table;
+      width: 100%;
+      height: 50%;
+
+
+    
+    }
+
+    #topContent
+    {
+    
+      background: #FFFFFF;;
+      padding-left: 2%;
+      padding-top: 1%;
+      width: 98%;
+      
+      height: 50%;
+      border-bottom: 5px solid #000000;
+      overflow-y: auto;
+
+    
+    }
+    
+    #contentLeft {
+      background: #FFFFFF;
+    
+      width: 50%;
+      display: table-cell;
+      border-right: 2px solid #000000;
+      padding-left: 2%;
+
+      overflow-y: auto;
+
+
+
+    }
+
+    #contentRight {
+      background: #FFFFFF;
+
+      width: 50%;
+      display: table-cell;
+
+    
+    }
+
+    @media (max-width: 600px){
+      #contentLeft {
+        display: block;
+        height: 300px;
+        width: 100%;
+      }
+      
+    #contentRight {
+        display: block;
+        height: 150px;
+        width: 100%;
+      }
+    }
+ 
+
+
+  body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      
+  }
+
+  table {
+      width: 45%;
+      border: 2px solid #808080;
+      border-collapse: collapse;
+    
+  }
+
+  table tr {
+    
+      border: 2px solid #808080;
+      
+
+  }
+
+  table th {
+  
+      padding: 10px;
+      text-align: center;
+      background-color: #192841; 
+      color: #FFFFFF;
+  }
+
+  table td {
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+    
+  }
+
+
+#title {
+
+  
+  font-size: 2.3em;
+  font-weight: bold;
+ 
+
+
+}
+
+
+.moreInformation, #btnNewIP {
+
+ background-color:#0047AB;  
+ 
+  color: #FFF;
+ 
+  text-align: center; 
+  font-size: 16px;
+  font-weight: bold;
+  
+  width: 230px;
+  height: 30px;
+ 
+
+}
+
+
+.moreInformation:hover, #btnNewIP:hover {
+
+ background-color: #FFFFFF;  
+ 
+  color: #000000;
+ 
+  text-align: center; 
+  font-size: 16px;
+  font-weight: bold;
+  
+  width: 230px;
+  height: 30px;
+ 
+
+}
+
+
+
+  @media screen and (max-width: 600px) {
+      table {
+          border: 0;
+          width: 95%;
+          color: #FFFFFF;
+      }
+
+      table thead {
+          border: none;
+          height: 1px;
+			margin: -1px;
+          overflow: hidden;
+          padding: 0;
+          position: absolute;
+		 visibility: hidden;
+      }
+      
+      table tr {
+          border-bottom: 1px solid #808080;
+          display: block;
+          margin-bottom: 10%;
+          background-color: 192841;
+      }
+      
+      table td {
+          border-bottom: 1px solid #808080;
+          display: block;
+          text-align: right;
+      }
+      
+      table td::before {
+          content: attr(key);
+          float: left;
+          font-weight: bold;
+		  
+      }
+
+      #title {
+      font-size: 1.7em;
+      font-weight: bold;
+      padding-left: 0%;
+    }
+
+
+.moreInformation, #btnNewIP {
+
+ background-color: #0047AB;
+ 
+  color: #FFF;
+ 
+  text-align: center; 
+  font-size: 16px;
+  font-weight: bold;
+  
+  width: 230px;
+  height: 30px;
+ 
+
+}
+
+
+
+  }
+
+ 
+
+
+#table1 {
+
+    border: 0;
+    width: 80%;
+    color: #FFFFFF;
+  
+  }
+
+#table1 thead {
+    border: none;
+    height: 1px;
+
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+}
+
+#table1 tr {
+    border-bottom: 1px solid #808080;
+    display: block;
+    margin-bottom: 10%;
+    background-color: 192841;
+}
+
+#table1 td {
+    border-bottom: 1px solid #808080;
+    display: block;
+    text-align: right;
+    font-size: 18px;
+}
+
+#table1 td::before {
+    content: attr(key);
+    float: left;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+ 
+
+
+
+
+
+
+</style>
+
+<script src="/socket.io/socket.io.js"></script>
+ 
+
+
+
+   <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""
+    />
+
+    <script
+      src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin=""
+    ></script>
+	
+	
+	
+<script>
+
+let appHTMLPage = "app8.html"
+
+let searchLoadType = 1;
+
+let currentPageNumber;
+
+let pageCount;
+let resultsPerPage = 4;	
+	
+	
+let selectedIndex = -1;
+	
+let previousPage;
+let nextPage;
+
+let highLightColor1 = '#CEFAD0';
+let foreColor1 = '#000000';
+
+
+let highLightColor2 = '#002F6C';
+let foreColor2 = '#FFFFFF';
+
+
+ addEventListener('resize', (event) => {});
+
+onresize = (event) => {
+
+
+
+	  formatIPListBackground();
+
+	//if(selectedIndex > - 1)
+				
+	//{
+			
+	//		let tableRef= document.getElementById("ipData");
+	//		let b = parseInt(document.getElementById('ipData').rows[selectedIndex+1].cells[0].innerHTML);
+			
+			
+	//		if(window.innerWidth > 600) 
+			
+	//		{
+
+	//					for(let i = 1; i < tableRef.rows.length; i++) {
+						
+	//						tableRef.rows[i].style.backgroundColor  = '#FFF';
+	//					}
+						
+	//					tableRef.rows[selectedIndex+1].style.backgroundColor  = '#228B22';			
+
+	//		}
+			
+			
+	//		else
+			
+	//		{
+						
+	//					for(let i = 1; i < tableRef.rows.length; i++) {
+						
+	//						tableRef.rows[i].style.backgroundColor  = 'yellow';
+	//					}
+						
+	//					tableRef.rows[selectedIndex+1].style.backgroundColor  = '#228B22';
+						
+					//	documentData = {
+					//		command: 'getIPInfoSQLData',
+					//		entryID: b 
+					//	};	
+						
+						//socket.emit('client_msg', documentData);
+			
+//			}
+	
+	};
+
+//};
+
+
+
+function formatIPListBackground() {
+			if(selectedIndex > - 1)
+				
+			{
+		
+						let tableRef= document.getElementById("ipData");
+						let b = parseInt(document.getElementById('ipData').rows[selectedIndex+1].cells[0].innerHTML);
+						
+						if(window.innerWidth > 600) 
+						{
+									for(let i = 1; i < tableRef.rows.length; i++) {
+									
+										tableRef.rows[i].style.backgroundColor  = '#FFF';
+										tableRef.rows[i].style.color  = foreColor1;
+									}			
+									tableRef.rows[selectedIndex+1].style.backgroundColor  = highLightColor1;
+									tableRef.rows[selectedIndex+1].style.color  = foreColor1;
+						}
+						
+						else
+						
+						{
+									
+									for(let i = 1; i < tableRef.rows.length; i++) {
+									
+									 
+										
+										tableRef.rows[i].style.backgroundColor  = highLightColor2 ;
+										tableRef.rows[i].style.color  = foreColor2;
+										
+									}
+									
+									tableRef.rows[selectedIndex+1].style.backgroundColor  = highLightColor1;
+									tableRef.rows[selectedIndex+1].style.color  = foreColor1;
+						}
+						
+			
+			}
+}
+
+const getDate = () => {
+	let currentDate = new Date();
+	let dd = currentDate.getDate();
+	let mm = currentDate.getMonth() + 1;
+	let yyyy = currentDate.getFullYear();
+//	if(dd < 10) {
+//		dd =  dd;
+//	}
+//	if(mm < 10) {
+//		mm = '0' + mm;
+//	}
+	currentDate = mm + '/' + dd + '/' + yyyy;
+	return currentDate;
+}
+
+
+function toPreviousPage() {
+	 currentPageNumber = currentPageNumber - 1;
+	
+	documentData = {
+		command: 'loadPage',
+		appHTML: appHTMLPage,
+		parameters: {'pageNumber': currentPageNumber, 'resultsPerPage': resultsPerPage}	
+	};
+
+
+	socket.emit('client_msg', documentData);
+}
+
+
+function toNextPage() {
+	
+	currentPageNumber = currentPageNumber + 1;
+ 
+	documentData = {
+		command: 'loadPage',
+		appHTML: appHTMLPage,
+		parameters: {'pageNumber': currentPageNumber, 'resultsPerPage': resultsPerPage}	
+	};
+
+
+	socket.emit('client_msg', documentData);
+}
+
+
+
+
+function getStoredIPData(buttonObject) {
+
+ 
+ 
+	let buttons = document.getElementsByClassName('moreInformation');
+	let a = -1;
+	for(let i = 0; i < buttons.length; i++) {
+ 
+		if(buttonObject == buttons[i]) {
+
+
+			a = i;
+		}
+	}
+	if(a != -1) {
+
+		let tableRef= document.getElementById("ipData");
+												
+	
+		selectedIndex = a;
+												
+		let b = parseInt(document.getElementById('ipData').rows[selectedIndex+1].cells[0].innerHTML);
+		
+		
+		formatIPListBackground();
+		
+		
+	//	for(let i = 1; i < tableRef.rows.length; i++) {
+		
+	//		tableRef.rows[i].style.backgroundColor  = '#FFF';
+	//	}
+		
+		//tableRef.rows[selectedIndex+1].style.backgroundColor  = '#228B22';
+	
+	
+			documentData = {
+			command: 'getIPInfoSQLData',
+			entryID: b 
+		};	
+		
+		socket.emit('client_msg', documentData);
+							
+		
+	} else {}
+	 
+
+
+	//document.getElementById("dataTable1").deleteRow(rowNumber); 
+}
+
+
+
+function addNewIP() {
+ 
+	
+	let ipAddressInput = prompt("Please enter an IP Address");
+	
+	if (ipAddressInput != null && ipAddressInput != '' && ipAddressInput != ' ') {
+
+		documentData = {
+			command: 'lookupIPAddress',
+			ipAddress: ipAddressInput 
+		};	
+		
+		socket.emit('client_msg', documentData);
+									
+ 									
+	}
+
+
+}
+
+	
+
+  
+
+function openGeoIPLookup() {
+	let documentData = {
+		command: 'loadApp',
+		appHTML: appHTMLPage,
+		parameters: ''
+	};
+	socket.emit('client_msg', documentData);
+}
+
+var socket = io();
+
+
+ 
+
+
+socket.on('connection_accept',  function(data) {
+
+ 
+		openGeoIPLookup();
+	
+	
+		socket.on('server_msg', function(data) {
+		
+		
+				let parseJSON = JSON.parse(data);
+				let jsString;
+				let htmlString;
+				//let header1;
+				let buildHTML;
+				let documentData;
+				//let data1;
+				//let format1;
+				
+				switch(parseJSON.returnType) {
+						case 'loadedAppData':
+							jsString = document.createElement('SCRIPT')
+							htmlString = document.createTextNode(parseJSON.javascript);
+							jsString.appendChild(htmlString);
+							document.body.appendChild(jsString);
+							
+							if(searchLoadType == 0) {
+								documentData = {
+									command: 'getIPAddressList',
+									appHTML: appHTMLPage
+								};
+								
+							}
+							
+							else if(searchLoadType == 1) {
+								documentData = {
+									command: 'loadPage',
+									appHTML: appHTMLPage,
+									parameters: {'pageNumber': 1, 'resultsPerPage': resultsPerPage}	
+								};
+							
+							}
+							
+							socket.emit('client_msg', documentData);
+							break;
+							
+							
+					case 'pageNumberReturnData':
+
+							document.getElementById('topContainer').innerHTML = '';
+							buildTopContent(parseJSON.response);			
+							
+							let jsonPageNumber = parseJSON.pageNumber;
+							let jsonPageCount = parseJSON.pageCount; 
+
+							let pageLabelData = modifyPageNumberLabel(jsonPageNumber, jsonPageCount);
+							document.getElementById('pageNumber').innerHTML = pageLabelData;							
+
+							currentPageNumber = jsonPageNumber;
+						
+							previousPage = document.getElementById("previousPage");
+							nextPage = document.getElementById("nextPage");				
+
+							previousPage.disabled = false;
+							nextPage.disabled = false;
+							
+							
+							if(jsonPageNumber <= 1) {
+									previousPage.disabled = true;
+							}		
+							
+							
+							
+							if(jsonPageNumber >= jsonPageCount )		
+							{
+									nextPage.disabled = true;			
+							}	
+
+ 
+ 
+							if(!isNaN(parseJSON.focusFirst))
+
+							{
+ 
+								//	let b = parseInt(document.getElementById('ipData').rows[a+1].cells[0].innerHTML);
+									
+									documentData = {
+										command: 'getIPInfoSQLData',
+										entryID: parseJSON.focusFirst 
+									};	
+									
+									socket.emit('client_msg', documentData);
+									
+						selectedIndex = 0;
+						if(selectedIndex > - 1)
+							
+						{
+									let tableRef= document.getElementById("ipData");
+									let b = parseInt(document.getElementById('ipData').rows[selectedIndex+1].cells[0].innerHTML);
+									
+									if(window.innerWidth > 600) 
+									{
+												for(let i = 1; i < tableRef.rows.length; i++) {
+												
+													tableRef.rows[i].style.backgroundColor  = '#FFF';
+												}			
+												tableRef.rows[selectedIndex+1].style.backgroundColor  = highLightColor1;
+												tableRef.rows[selectedIndex+1].style.color  = foreColor1;
+									}
+									
+									else
+									
+									{
+												
+												for(let i = 1; i < tableRef.rows.length; i++) {
+												
+													tableRef.rows[i].style.backgroundColor  = highLightColor2 ;
+													tableRef.rows[i].style.color  = foreColor1;
+												}
+												
+												tableRef.rows[selectedIndex+1].style.backgroundColor  =highLightColor1;
+												tableRef.rows[selectedIndex+1].style.color  = foreColor1;
+									}
+									
+						
+						}					
+													
+									
+									
+									
+									
+							}
+	 
+							
+							
+							break;
+							
+					  case 'ipAddressListRetrieved':
+ 
+							
+							document.getElementById('topContainer').innerHTML = '';
+							buildTopContent(parseJSON.response);
+							
+	 
+							
+							break;
+							
+							
+					case 'getIPInfoSQLDataRetrieved':
+ 
+ 
+							console.log(parseJSON.entryData);
+							
+							document.getElementById('contentLeft').innerHTML = '';
+							buildLeftContent(parseJSON.entryData);
+						//	formatIPListBackground();
+						
+						
+						
+ 
+						
+						
+						
+						
+						
+						
+						
+							break;
+							
+							
+					case 'ipAddressAdded':
+					
+					
+							if(searchLoadType == 0) {
+							
+										let tableRef= document.getElementById("ipData");
+										let row = tableRef.insertRow(1);
+										
+			 
+										
+										row.innerHTML += '<tr>';
+										row.innerHTML += '<td key="ID">'+parseJSON.id+'</td>';
+										row.innerHTML += '<td key="Date">'+getDate()+'</td>';
+										row.innerHTML += '<td key="IP Address">'+parseJSON.ipAddress+'</td>';
+										row.innerHTML += '<td key=""><button class="moreInformation" onClick="getStoredIPData(this)">More Information</button></td>';
+										row.innerHTML += '</tr>';		
+
+
+										tableRef.rows[1].style.backgroundColor  ="#228B22";
+										
+										
+										setTimeout(() => {
+											
+					 
+													//tableRef.rows[a].style.backgroundColor  ="#FFF";
+													tableRef.deleteRow(1);
+													let row = tableRef.insertRow(1);
+													
+													
+													row.innerHTML += '<tr>';
+													row.innerHTML += '<td key="ID">'+parseJSON.id+'</td>';
+													row.innerHTML += '<td key="Date">'+getDate()+'</td>';
+													row.innerHTML += '<td key="IP Address">'+parseJSON.ipAddress+'</td>';
+													row.innerHTML += '<td key=""><button class="moreInformation" onClick="getStoredIPData(this)">More Information</button></td>';
+													row.innerHTML += '</tr>';			 
+											
+											//setStatus(``);	 
+											}, 1200);		
+											
+								
+								}
+								
+								else
+								{
+										currentPageNumber = 1;
+				
+										documentData = {
+											command: 'loadPage',
+											appHTML: appHTMLPage,
+											parameters: {'pageNumber': 1, 'resultsPerPage': resultsPerPage},
+											focusFirst: true
+										};
+
+										socket.emit('client_msg', documentData);	
+								}
+							
+							break;
+							
+				}
+			
+		});
+}
+
+);
+
+ function modifyPageNumberLabel(currentPage, totalPages) {
+	if(totalPages == null) {
+		return `Page ${currentPage} of 1`;
+	}
+	return `Page ${currentPage} of ${totalPages}`;
+}
+
+function buildTopContent(contentArray) {
+
+	let buildHtML;
+	
+	//alert(contentArray);
+	
+	if(typeof(contentArray) != 'undefined') {
+		 
+		 
+			//buildHTML += '	<table><thead><tr><th>ID</th><th>Date</th><th>IP Address</th><th></th><tr/></thead><tbody>';
+			
+			  document.getElementById('topContent').innerHTML = '';
+			  
+			  
+			  
+			  
+					buildHTML = `
+
+					  <div id="title">GeoIP Lookup</div>
+					  
+					  <br/>
+					  <div id="pageNavigation"><button id="previousPage"  onClick="toPreviousPage()" disabled>Previous Page</button>&nbsp;&nbsp;<label id="pageNumber">Page 1 of 1</label>&nbsp;&nbsp;<button id="nextPage" onClick="toNextPage()" disabled>Next Page</button></div><br/>
+					<br/>
+					<button id="btnNewIP" onClick="addNewIP()">Add New IP</button>  <br/> <br/>
+					<div id="topContainer">
+						<table id='ipData'>
+						  <thead>
+							<tr>
+							  <th>ID</th>
+							  <th>Date</th>
+							  <th>IP Address</th>
+							  <th></th>
+						  
+
+							</tr>
+						  </thead>
+						  <tbody>
+						  `;
+						  
+						  
+ 
+						
+						
+
+						  
+						for(let i = 0; i < contentArray.length; i++) {
+						
+						
+
+
+								buildHTML += '<tr>';
+								buildHTML += '<td key="ID">'+contentArray[i].id+'</td>';
+								buildHTML += '<td key="Date">'+contentArray[i].date+'</td>';
+								buildHTML += '<td key="IP Address">'+contentArray[i].ipAddress+'</td>';
+								buildHTML += '<td key=""><button class="moreInformation" onClick="getStoredIPData(this)">More Information</button></td>';			
+								buildHTML += '</tr>';			
+ 
+
+						}			
+								 
+ 							
+						buildHTML += `	
+						  </tbody>
+						</table>
+						
+						</div>
+
+				  `;	  
+			  
+			  
+		
+ 
+	}
+	
+	else
+	{
+
+					buildHTML = ` 
+
+					  <div id="title">GeoIP Lookup</div>
+					  
+					  <br/>
+					  <div id="pageNavigation"><button id="previousPage"  onClick="toPreviousPage()" disabled>Previous Page</button>&nbsp;&nbsp;<label id="pageNumber">Page 1 of 1</label>&nbsp;&nbsp;<button id="nextPage" onClick="toNextPage()" disabled>Next Page</button></div><br/>
+					<br/>
+					<button id="btnNewIP" onClick="addNewIP()">Add New IP</button>  <br/> <br/>
+					<div id="topContainer">
+						<table>
+						  <thead>
+							<tr>
+							  <th>ID</th>
+							  <th>Date</th>
+							  <th>IP Address</th>
+							  <th></th>
+						  
+
+							</tr>
+						  </thead>
+						  <tbody>
+ 
+						  </tbody>
+						</table>
+						
+						</div>
+
+				  `;
+				  
+				  
+ 
+
+}
+
+ 
+ 
+ 				    document.getElementById('topContent').innerHTML = buildHTML;
+
+}
+
+
+
+function formatDate(theDate) {
+
+
+	let date1 =  new Date(theDate);
+	let dateString = date1.getMonth() + 1 + '/' + date1.getDate() + '/'  + date1.getFullYear();
+	
+	return dateString;
+	
+}
+
+function buildLeftContent(contentArray) {
+
+
+	let buildHTML;
+  
+  
+	if(typeof(contentArray) != 'undefined') {
+	
+			 let formattedDate = formatDate(contentArray[0].date);
+	
+	
+ 
+			 
+			  buildHTML = `</br><br/><b>Entry ID ${contentArray[0].id}<br/><br/>
+
+			  <table id="table1">
+					  <thead>
+						<tr>
+			 
+
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td key="Date">${formattedDate}</td>
+						  <td key="IP Address">${contentArray[0].ipAddress}</td>
+						  <td key="Country">${contentArray[0].country}</td>    
+						  <td key="Country Code">${contentArray[0].countryCode}</td>      
+						  <td key="Region">${contentArray[0].region}</td>
+						  <td key="Region Name">${contentArray[0].regionName}</td>
+						  <td key="City">${contentArray[0].city}</td>       
+						  <td key="Zip">${contentArray[0].zip}</td>
+						  <td key="Latitude">${contentArray[0].latitude}</td>
+						  <td key="Longitude">${contentArray[0].longitude}</td>       
+						  <td key="Time Zone">${contentArray[0].timeZone}</td>
+						  <td key="ISP">${contentArray[0].isp}</td>
+						  <td key="As">${contentArray[0].as1}</td>                    
+						  
+						  
+
+						</tr>
+					  </tbody>
+					</table>
+
+			  
+			  `;
+			  
+			  
+			  
+			  	document.getElementById('contentLeft').innerHTML = buildHTML;
+				
+				
+				
+				buildMap(contentArray[0].latitude, contentArray[0].longitude);
+				scrollHalf();
+
+
+		
+ 
+ 
+  
+  }
+  
+  else
+  
+  {}
+}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body>
+
+  
+
+ 
+<div id="topContent"><script>buildTopContent();</script></div>
+
+
+
+<div id="container">
+	 
+	
+	<div id="contentLeft"><script>buildLeftContent();</script></div>
+	<div id="contentRight"> 
+	 
+ 
+	
+	</div>
+	
+	
+	<script>
+	
+	
+	function scrollHalf(){
+		window.scrollTo(0, document.body.scrollHeight / 2);
+	}	
+	
+	
+	let mapInit = 0;
+	var map;
+	
+	function buildMap(lat, lon) {
+	
+	
+			document.getElementById('contentRight').innerHTML = '';
+			
+		//	https://stackoverflow.com/questions/19186428/refresh-leaflet-map-map-container-is-already-initialized
+	
+	
+			
+			let latitude =lat;
+			let longitude =lon;
+			
+			 
+
+
+			if(mapInit == 0) {
+			
+ 
+				map = L.map('contentRight',{scrollWheelZoom:false}).setView([latitude, longitude], 10);
+				
+				
+				
+
+				let markCity = L.marker([latitude, longitude]).addTo(map);
+
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
+				
+				
+				
+				
+				mapInit = 1;
+				
+			}
+			
+			
+			else 
+			{
+ 
+					
+					map.off();
+					map.remove();	
+					
+					
+ 
+					map = L.map('contentRight',{scrollWheelZoom:false}).setView([latitude, longitude], 10);
+					
+					
+					
+
+					let markCity = L.marker([latitude, longitude]).addTo(map);
+
+					L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					}).addTo(map);
+					
+					
+					
+			}
+				
+ 
+	
+	}
+	
+	
+ 
+	
+	</script>
+	
+
+</div>
+ 
+ 
+  
+
+
+</body>
+
+ </html>
